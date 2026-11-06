@@ -3,106 +3,510 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLAY HUB — Online Gaming Platform</title>
+<meta name="theme-color" content="#090d19">
+<title>PLAY HUB — Arena of Legends</title>
 <style>
+:root {
+  --bg:#090d19;
+  --panel:#131b2d;
+  --panel2:#1a2540;
+  --gold:#f7bd52;
+  --blue:#5b9cff;
+  --text:#f4f6ff;
+  --muted:#9ba8c4;
+  --border:#293653;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#090d18;color:#fff;font-family:Arial,sans-serif}
-header{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:#111827;border-bottom:1px solid #263248}
-.logo{font-size:25px;font-weight:900;color:#55aaff}
-nav{display:flex;gap:20px;align-items:center}
-a{color:#ddd;text-decoration:none}
-select,button{padding:11px 15px;border:1px solid #34445e;border-radius:9px;background:#17243a;color:white}
-.hero{text-align:center;padding:75px 20px;background:radial-gradient(ellipse at top,#193d70,#090d18 70%)}
-.hero h1{font-size:clamp(38px,8vw,65px);margin:10px}
-.hero p{color:#b8c7dc;font-size:18px}
-.primary{background:#1675ed;border:0;font-weight:bold;cursor:pointer}
-section{padding:35px 6%}
-h2{font-size:27px}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.game{background:#141e30;border:1px solid #293954;border-radius:15px;padding:23px}
-.game .emoji{font-size:42px}
-.game p{color:#aebbd0}
-.game button{width:100%;cursor:pointer;background:#176ce0;border:0}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
-.feature{padding:20px;background:#141e30;border-radius:12px}
-footer{text-align:center;padding:30px;color:#8594aa;border-top:1px solid #263248}
-@media(max-width:600px){header{padding:15px;flex-wrap:wrap;gap:12px}nav{gap:12px;font-size:14px}.hero{padding:55px 15px}}
+body{
+  margin:0;background:radial-gradient(ellipse at top,#172644 0,#090d19 55%);
+  color:var(--text);font-family:Arial,sans-serif;min-height:100vh
+}
+button{cursor:pointer;font:inherit}
+header{
+  position:sticky;top:0;z-index:10;background:#0b1120ee;
+  border-bottom:1px solid var(--border);backdrop-filter:blur(14px);
+  padding:14px 5%;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap
+}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px;color:var(--gold)}
+.logo span{color:white}
+.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.coins{color:var(--gold);font-weight:bold}
+select{
+  background:var(--panel);color:white;border:1px solid var(--border);
+  border-radius:9px;padding:9px
+}
+nav{
+  display:flex;gap:7px;overflow-x:auto;padding:12px 5%;
+  background:#0c1322;border-bottom:1px solid var(--border)
+}
+nav button{
+  white-space:nowrap;background:transparent;color:var(--muted);
+  border:1px solid transparent;padding:10px 14px;border-radius:9px
+}
+nav button.active,nav button:hover{
+  color:var(--gold);background:var(--panel2);border-color:var(--border)
+}
+main{max-width:1250px;margin:auto;padding:25px 5% 60px}
+.page{display:none}
+.page.active{display:block}
+.hero{
+  background:linear-gradient(120deg,#1b3155,#18213a 60%,#392b3d);
+  border:1px solid #405174;border-radius:20px;padding:30px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:20px;flex-wrap:wrap;overflow:hidden
+}
+.hero h1{font-size:clamp(30px,5vw,52px);margin:0 0 12px}
+.hero p{color:#c2cee4;max-width:570px;line-height:1.6}
+.eyebrow{color:var(--gold);font-weight:bold;letter-spacing:3px;font-size:12px}
+.hero-art{font-size:100px;filter:drop-shadow(0 10px 20px #0008)}
+.btn{
+  background:linear-gradient(135deg,#f8c65e,#e99438);color:#19131a;
+  border:0;border-radius:10px;padding:12px 18px;font-weight:800
+}
+.btn.secondary{background:#263755;color:white;border:1px solid #415579}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.section-title{font-size:25px;margin:28px 0 16px}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px
+}
+.card{
+  background:linear-gradient(145deg,#17223a,#111a2c);
+  border:1px solid var(--border);border-radius:16px;padding:18px;
+  box-shadow:0 10px 25px #0002
+}
+.card h3{margin:8px 0}
+.muted{color:var(--muted);font-size:14px;line-height:1.5}
+.character-art{
+  height:145px;display:flex;align-items:center;justify-content:center;
+  font-size:83px;border-radius:12px;
+  background:radial-gradient(circle at 50% 40%,#425b85,#1a2740 70%);
+  margin-bottom:13px
+}
+.character-card.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.tag{
+  display:inline-block;padding:5px 9px;border-radius:20px;
+  background:#273957;color:#b9d3ff;font-size:11px;margin:3px 3px 3px 0
+}
+.tag.gold{background:#473923;color:#ffd27a}
+.stat{margin:12px 0}
+.stat-line{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.bar{height:8px;background:#283650;border-radius:20px;overflow:hidden}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,#528aff,#55d4d0)}
+.item-icon{font-size:35px}
+.item{display:flex;gap:12px;align-items:center}
+.item-info{flex:1}
+.item-actions{display:flex;gap:6px;flex-wrap:wrap}
+.small{font-size:12px}
+.notice{
+  padding:13px 15px;border:1px solid #68552e;background:#342b1d;
+  color:#ffdb93;border-radius:10px;line-height:1.5;margin:15px 0
+}
+.profile{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap
+}
+.avatar{font-size:65px;background:#273957;border-radius:18px;padding:12px}
+footer{text-align:center;padding:30px;color:#71809e;border-top:1px solid var(--border)}
+.modal-bg{
+  position:fixed;inset:0;background:#000b;z-index:30;
+  display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal-bg.show{display:flex}
+.modal{
+  max-width:440px;width:100%;background:#17223a;
+  border:1px solid #43577d;border-radius:18px;padding:24px
+}
+input{
+  width:100%;padding:12px;background:#0d1628;color:white;
+  border:1px solid var(--border);border-radius:9px;margin:7px 0 14px
+}
+.empty{text-align:center;color:var(--muted);padding:30px}
+@media(max-width:600px){
+ header{padding:12px 4%}
+ main{padding:18px 4% 40px}
+ .hero{padding:22px}
+ .hero-art{font-size:70px}
+ .section-title{font-size:21px}
+}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">🎮 PLAY HUB</div>
-  <nav>
-    <a href="#games" data-i="games">Игры</a>
-    <a href="#about" data-i="about">О нас</a>
-    <select id="language" aria-label="Language">
-      <option value="ru">RU</option>
-      <option value="en">EN</option>
-      <option value="tr">TR</option>
-      <option value="az">AZ</option>
+  <div class="logo">PLAY <span>HUB</span></div>
+  <div class="header-right">
+    <span class="coins">🪙 <b id="coins">500</b></span>
+    <select id="language" onchange="changeLanguage(this.value)">
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+      <option value="tr">Türkçe</option>
+      <option value="az">Azərbaycan</option>
     </select>
-  </nav>
+  </div>
 </header>
 
-<main>
-<div class="hero">
-  <h1>PLAY HUB</h1>
-  <p data-i="subtitle">Твоя игровая вселенная начинается здесь!</p>
-  <a href="#games"><button class="primary" data-i="explore">Исследовать игры</button></a>
-</div>
+<nav id="navigation">
+  <button class="active" onclick="showPage('home',this)">Главная</button>
+  <button onclick="showPage('heroes',this)">Герои</button>
+  <button onclick="showPage('profile',this)">Мой герой</button>
+  <button onclick="showPage('shop',this)">Магазин</button>
+  <button onclick="showPage('inventory',this)">Инвентарь</button>
+  <button onclick="showPage('missions',this)">Задания</button>
+  <button onclick="showPage('arena',this)">Арена</button>
+</nav>
 
-<section id="games">
-  <h2 data-i="gamesTitle">Популярные игры</h2>
-  <div class="games">
-    <div class="game">
-      <div class="emoji">⚔️</div>
-      <h3 data-i="game1">Арена героев</h3>
-      <p data-i="desc1">Сражайся и стань легендой арены.</p>
-      <button onclick="comingSoon()" data-i="play">Скоро</button>
+<main>
+<section class="page active" id="home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">THE NEXT GENERATION OF GAMING</div>
+      <h1>ARENA OF<br>LEGENDS</h1>
+      <p>Выбирай своего героя, развивай его силу, собирай легендарную экипировку и становись чемпионом арены.</p>
+      <button class="btn" onclick="showPage('heroes')">ВЫБРАТЬ ГЕРОЯ</button>
     </div>
-    <div class="game">
-      <div class="emoji">🏎️</div>
-      <h3 data-i="game2">Гонки</h3>
-      <p data-i="desc2">Проверь свою скорость.</p>
-      <button onclick="comingSoon()" data-i="play">Скоро</button>
-    </div>
-    <div class="game">
-      <div class="emoji">🧩</div>
-      <h3 data-i="game3">Головоломки</h3>
-      <p data-i="desc3">Испытай свою логику.</p>
-      <button onclick="comingSoon()" data-i="play">Скоро</button>
-    </div>
+    <div class="hero-art">⚔️</div>
   </div>
+
+  <h2 class="section-title">Твой игровой мир</h2>
+  <div class="grid">
+    <div class="card"><div class="item-icon">🦸</div><h3>Легендарные герои</h3><p class="muted">Выбирай персонажей с разными классами и способностями.</p></div>
+    <div class="card"><div class="item-icon">🛡️</div><h3>Экипировка</h3><p class="muted">Собирай броню, оружие, щиты и редкие предметы.</p></div>
+    <div class="card"><div class="item-icon">🏆</div><h3>Турниры</h3><p class="muted">Выполняй задания и поднимайся в таблице лидеров.</p></div>
+  </div>
+
+  <h2 class="section-title">Статистика платформы</h2>
+  <div class="grid">
+    <div class="card"><div class="muted">Игроки в демонстрации</div><h2>1 284</h2><span class="tag">Демо-данные</span></div>
+    <div class="card"><div class="muted">Легендарные герои</div><h2>6</h2></div>
+    <div class="card"><div class="muted">Твой уровень</div><h2 id="homeLevel">1</h2></div>
+  </div>
+  <div class="notice">Демонстрационная версия. Счётчик игроков и таблица лидеров пока не показывают реальных пользователей.</div>
 </section>
 
-<section id="about">
-  <h2 data-i="about">О нас</h2>
-  <div class="features">
-    <div class="feature">🌍 <span data-i="f1">Четыре языка</span></div>
-    <div class="feature">🎮 <span data-i="f2">Игровая платформа</span></div>
-    <div class="feature">📱 <span data-i="f3">Для телефона и компьютера</span></div>
+<section class="page" id="heroes">
+  <div class="eyebrow">CHOOSE YOUR DESTINY</div>
+  <h1>Выбор персонажа</h1>
+  <p class="muted">У каждого героя свои характеристики и стиль игры. Выбери своего чемпиона.</p>
+  <div class="grid" id="heroGrid"></div>
+</section>
+
+<section class="page" id="profile">
+  <h1 class="section-title">Мой герой</h1>
+  <div id="profileContent"></div>
+</section>
+
+<section class="page" id="shop">
+  <h1 class="section-title">Легендарный магазин</h1>
+  <p class="muted">Покупай предметы за игровые монеты.</p>
+  <div class="grid" id="shopGrid"></div>
+</section>
+
+<section class="page" id="inventory">
+  <h1 class="section-title">Мой инвентарь</h1>
+  <div class="grid" id="inventoryGrid"></div>
+</section>
+
+<section class="page" id="missions">
+  <h1 class="section-title">Задания и награды</h1>
+  <div class="grid" id="missionsGrid"></div>
+</section>
+
+<section class="page" id="arena">
+  <div class="eyebrow">CHAMPIONS ARE BORN HERE</div>
+  <h1 class="section-title">Арена чемпионов</h1>
+  <div class="notice">Сейчас доступен тренировочный режим против игрового соперника. Реальные онлайн-сражения появятся после подключения серверной системы и матчмейкинга.</div>
+  <div class="card">
+    <div class="profile">
+      <div class="avatar" id="arenaHero">🛡️</div>
+      <div><h2 id="arenaName">Твой герой</h2><p class="muted">Уровень <span id="arenaLevel">1</span></p></div>
+    </div>
+    <hr style="border-color:#293653">
+    <h2>⚔️ Тренировочный бой</h2>
+    <p class="muted">Сразись с тренировочным противником и получи награду.</p>
+    <div id="battleResult" class="muted"></div>
+    <button class="btn" onclick="battle()">НАЧАТЬ БОЙ</button>
   </div>
+  <h2 class="section-title">Таблица чемпионов</h2>
+  <div class="card" id="leaderboard"></div>
 </section>
 </main>
 
-<footer>© 2026 PLAY HUB · Online Gaming Platform</footer>
+<footer>
+  <div class="logo">PLAY HUB</div>
+  <p>ARENA OF LEGENDS · Играй. Развивайся. Побеждай.</p>
+  <p class="small">Прототип игровой платформы · Версия 1.0</p>
+</footer>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2 id="modalTitle">PLAY HUB</h2>
+    <p id="modalText" class="muted"></p>
+    <button class="btn" onclick="closeModal()">ПОНЯТНО</button>
+  </div>
+</div>
 
 <script>
-const translations={
-ru:{games:"Игры",about:"О нас",subtitle:"Твоя игровая вселенная начинается здесь!",explore:"Исследовать игры",gamesTitle:"Популярные игры",game1:"Арена героев",game2:"Гонки",game3:"Головоломки",desc1:"Сражайся и стань легендой арены.",desc2:"Проверь свою скорость.",desc3:"Испытай свою логику.",play:"Скоро",f1:"Четыре языка",f2:"Игровая платформа",f3:"Для телефона и компьютера",notice:"Игры скоро появятся!"},
-en:{games:"Games",about:"About",subtitle:"Your gaming universe starts here!",explore:"Explore games",gamesTitle:"Popular games",game1:"Heroes Arena",game2:"Racing",game3:"Puzzles",desc1:"Fight and become an arena legend.",desc2:"Test your speed.",desc3:"Challenge your logic.",play:"Coming soon",f1:"Four languages",f2:"Gaming platform",f3:"For mobile and desktop",notice:"Games are coming soon!"},
-tr:{games:"Oyunlar",about:"Hakkımızda",subtitle:"Oyun evrenin burada başlıyor!",explore:"Oyunları keşfet",gamesTitle:"Popüler oyunlar",game1:"Kahramanlar Arenası",game2:"Yarış",game3:"Bulmacalar",desc1:"Savaş ve arenanın efsanesi ol.",desc2:"Hızını test et.",desc3:"Mantığını dene.",play:"Yakında",f1:"Dört dil",f2:"Oyun platformu",f3:"Telefon ve bilgisayar için",notice:"Oyunlar yakında!"},
-az:{games:"Oyunlar",about:"Haqqımızda",subtitle:"Oyun dünyan burada başlayır!",explore:"Oyunları kəşf et",gamesTitle:"Populyar oyunlar",game1:"Qəhrəmanlar Arenası",game2:"Yarış",game3:"Tapmacalar",desc1:"Döyüş və arenanın əfsanəsi ol.",desc2:"Sürətini yoxla.",desc3:"Məntiqini sına.",play:"Tezliklə",f1:"Dörd dil",f2:"Oyun platforması",f3:"Telefon və kompüter üçün",notice:"Oyunlar tezliklə! "}
+const heroes = [
+ {id:"knight",name:"Артемис",class:"Рыцарь света",icon:"🛡️",power:90,hp:100,magic:55,rarity:"Эпический",color:"Свет"},
+ {id:"shadow",name:"Ноктис",class:"Теневой воин",icon:"🥷",power:100,hp:70,magic:65,rarity:"Легендарный",color:"Тьма"},
+ {id:"mage",name:"Элиана",class:"Верховный маг",icon:"🧙‍♀️",power:65,hp:75,magic:100,rarity:"Легендарный",color:"Магия"},
+ {id:"dragon",name:"Драконор",class:"Повелитель драконов",icon:"🐉",power:100,hp:100,magic:85,rarity:"Мифический",color:"Огонь"},
+ {id:"archer",name:"Лунария",class:"Королева луков",icon:"🏹",power:85,hp:75,magic:80,rarity:"Эпический",color:"Природа"},
+ {id:"paladin",name:"Соларион",class:"Золотой паладин",icon:"⚔️",power:85,hp:100,magic:75,rarity:"Легендарный",color:"Свет"}
+];
+
+const shopItems = [
+ {id:"sword",name:"Меч дракона",icon:"⚔️",type:"Оружие",power:25,price:180},
+ {id:"bow",name:"Лунный лук",icon:"🏹",type:"Оружие",power:20,price:150},
+ {id:"armor",name:"Броня титана",icon:"🛡️",type:"Броня",power:15,price:200},
+ {id:"helmet",name:"Шлем чемпиона",icon:"⛑️",type:"Шлем",power:10,price:120},
+ {id:"staff",name:"Посох звёзд",icon:"🔮",type:"Магия",power:30,price:220},
+ {id:"cape",name:"Плащ легенды",icon:"🧥",type:"Костюм",power:12,price:140},
+ {id:"ring",name:"Кольцо силы",icon:"💍",type:"Артефакт",power:18,price:160},
+ {id:"shield",name:"Щит стража",icon:"🛡️",type:"Щит",power:22,price:190}
+];
+
+const translations = {
+ ru:{home:"Главная",heroes:"Герои",profile:"Мой герой",shop:"Магазин",inventory:"Инвентарь",missions:"Задания",arena:"Арена"},
+ en:{home:"Home",heroes:"Heroes",profile:"My Hero",shop:"Shop",inventory:"Inventory",missions:"Missions",arena:"Arena"},
+ tr:{home:"Ana Sayfa",heroes:"Kahramanlar",profile:"Kahramanım",shop:"Mağaza",inventory:"Envanter",missions:"Görevler",arena:"Arena"},
+ az:{home:"Ana səhifə",heroes:"Qəhrəmanlar",profile:"Qəhrəmanım",shop:"Mağaza",inventory:"İnventar",missions:"Tapşırıqlar",arena:"Arena"}
 };
-function setLanguage(lang){
-document.documentElement.lang=lang;
-document.querySelectorAll("[data-i]").forEach(el=>{
-const key=el.dataset.i;
-if(translations[lang][key])el.textContent=translations[lang][key];
-});
+
+const missions = [
+ {id:"battle",name:"Первая тренировка",desc:"Проведи тренировочный бой.",reward:100},
+ {id:"buy",name:"Коллекционер",desc:"Купи любой предмет в магазине.",reward:80},
+ {id:"level",name:"Путь чемпиона",desc:"Достигни второго уровня.",reward:120}
+];
+
+let state = loadState();
+
+function loadState(){
+ try{
+  const saved=localStorage.getItem("playhub_save_v1");
+  if(saved){
+   const parsed=JSON.parse(saved);
+   if(parsed && Array.isArray(parsed.inventory) && parsed.heroId) return parsed;
+  }
+ }catch(e){}
+ return {
+  heroId:"knight",level:1,xp:0,coins:500,
+  inventory:[],equipped:[],completed:[],battles:0,
+  language:"ru"
+ };
 }
-document.getElementById("language").addEventListener("change",e=>setLanguage(e.target.value));
-function comingSoon(){alert(translations[document.getElementById("language").value].notice)}
-</script>
-</body>
-</html>
+
+function save(){
+ localStorage.setItem("playhub_save_v1",JSON.stringify(state));
+ renderAll();
+}
+
+function currentHero(){
+ return heroes.find(h=>h.id===state.heroId)||heroes[0];
+}
+
+function totalPower(){
+ return currentHero().power+
+  state.level*5+
+  state.equipped.reduce((sum,id)=>{
+   const item=shopItems.find(x=>x.id===id);
+   return sum+(item?item.power:0);
+  },0);
+}
+
+function showPage(id,button){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(button)button.classList.add("active");
+ renderAll();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openModal(title,message){
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("modalText").textContent=message;
+ document.getElementById("modal").classList.add("show");
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+
+function selectHero(id){
+ state.heroId=id;
+ save();
+ openModal("Герой выбран!",currentHero().name+" теперь твой главный персонаж. Развивай его и собирай экипировку!");
+}
+
+function heroCard(h){
+ const selected=state.heroId===h.id;
+ return `<div class="card character-card ${selected?"selected":""}">
+ <div class="character-art">${h.icon}</div>
+ <span class="tag gold">${h.rarity}</span>
+ <h2>${h.name}</h2><p class="muted">${h.class}</p>
+ <div class="stat"><div class="stat-line"><span>⚔️ Сила</span><b>${h.power}</b></div><div class="bar"><span style="width:${h.power}%"></span></div></div>
+ <div class="stat"><div class="stat-line"><span>❤️ Здоровье</span><b>${h.hp}</b></div><div class="bar"><span style="width:${h.hp}%"></span></div></div>
+ <div class="stat"><div class="stat-line"><span>✨ Магия</span><b>${h.magic}</b></div><div class="bar"><span style="width:${h.magic}%"></span></div></div>
+ <p class="muted">Стихия: ${h.color}</p>
+ <button class="btn ${selected?"secondary":""}" style="width:100%" onclick="selectHero('${h.id}')">${selected?"ВЫБРАН":"ВЫБРАТЬ ГЕРОЯ"}</button>
+ </div>`;
+}
+
+function renderHeroes(){
+ document.getElementById("heroGrid").innerHTML=heroes.map(heroCard).join("");
+}
+
+function renderProfile(){
+ const h=currentHero();
+ const xpNeed=state.level*100;
+ document.getElementById("profileContent").innerHTML=`
+ <div class="card">
+  <div class="profile">
+   <div class="avatar">${h.icon}</div>
+   <div><span class="tag gold">${h.rarity}</span><h2>${h.name}</h2><p class="muted">${h.class}</p></div>
+  </div>
+  <h2>Уровень ${state.level}</h2>
+  <div class="stat-line"><span>Опыт</span><b>${state.xp} / ${xpNeed}</b></div>
+  <div class="bar"><span style="width:${Math.min(100,state.xp/xpNeed*100)}%"></span></div>
+  <h2>⚔️ Боевая мощь: ${totalPower()}</h2>
+  <div class="grid">
+   <div class="card"><h3>⚔️ Сила</h3><h2>${totalPower()}</h2></div>
+   <div class="card"><h3>❤️ Здоровье</h3><h2>${h.hp+state.level*5}</h2></div>
+   <div class="card"><h3>✨ Магия</h3><h2>${h.magic+state.level*3}</h2></div>
+  </div>
+  <h3>Экипировка</h3>
+  <p class="muted">${state.equipped.length?state.equipped.map(id=>{let x=shopItems.find(i=>i.id===id);return x?x.icon+" "+x.name:""}).join(" · "):"Пока нет экипированных предметов."}</p>
+  <button class="btn" onclick="showPage('heroes')">СМЕНИТЬ ГЕРОЯ</button>
+ </div>`;
+}
+
+function renderShop(){
+ document.getElementById("shopGrid").innerHTML=shopItems.map(item=>{
+ const owned=state.inventory.includes(item.id);
+ return `<div class="card">
+  <div class="item-icon">${item.icon}</div>
+  <span class="tag">${item.type}</span>
+  <h3>${item.name}</h3>
+  <p class="muted">Бонус силы: +${item.power}</p>
+  <p class="coins">🪙 ${item.price}</p>
+  <button class="btn" style="width:100%" ${owned?"disabled":""} onclick="buyItem('${item.id}')">${owned?"УЖЕ КУПЛЕНО":"КУПИТЬ"}</button>
+ </div>`;
+ }).join("");
+}
+
+function buyItem(id){
+ const item=shopItems.find(x=>x.id===id);
+ if(!item||state.inventory.includes(id))return;
+ if(state.coins<item.price){
+  openModal("Недостаточно монет","Выполняй задания и побеждай в тренировочных боях, чтобы заработать монеты.");
+  return;
+ }
+ state.coins-=item.price;
+ state.inventory.push(id);
+ save();
+ openModal("Покупка успешна!",item.name+" добавлен в твой инвентарь.");
+}
+
+function equip(id){
+ if(!state.inventory.includes(id))return;
+ if(state.equipped.includes(id)){
+  state.equipped=state.equipped.filter(x=>x!==id);
+ }else{
+  state.equipped.push(id);
+ }
+ save();
+}
+
+function renderInventory(){
+ const el=document.getElementById("inventoryGrid");
+ if(!state.inventory.length){
+  el.innerHTML='<div class="card empty">🎒<h3>Инвентарь пуст</h3><p>Загляни в магазин и приобрети первые предметы.</p><button class="btn" onclick="showPage(\\'shop\\')">ОТКРЫТЬ МАГАЗИН</button></div>';
+  return;
+ }
+ el.innerHTML=state.inventory.map(id=>{
+ const item=shopItems.find(x=>x.id===id);
+ if(!item)return "";
+ const active=state.equipped.includes(id);
+ return `<div class="card item">
+  <div class="item-icon">${item.icon}</div>
+  <div class="item-info"><b>${item.name}</b><p class="muted">+${item.power} силы</p><span class="tag">${item.type}</span></div>
+  <button class="btn ${active?"secondary":""}" onclick="equip('${id}')">${active?"СНЯТЬ":"НАДЕТЬ"}</button>
+ </div>`;
+ }).join("");
+}
+
+function renderMissions(){
+ document.getElementById("missionsGrid").innerHTML=missions.map(m=>{
+ const done=state.completed.includes(m.id);
+ return `<div class="card">
+ <span class="tag gold">НАГРАДА: 🪙 ${m.reward}</span>
+ <h3>${m.name}</h3><p class="muted">${m.desc}</p>
+ <button class="btn ${done?"secondary":""}" ${done?"disabled":""} onclick="claimMission('${m.id}')">${done?"ВЫПОЛНЕНО":"ПОЛУЧИТЬ НАГРАДУ"}</button>
+ </div>`;
+ }).join("");
+}
+
+function claimMission(id){
+ if(state.completed.includes(id))return;
+ const m=missions.find(x=>x.id===id);
+ if(!m)return;
+ let allowed=false;
+ if(id==="battle")allowed=state.battles>0;
+ if(id==="buy")allowed=state.inventory.length>0;
+ if(id==="level")allowed=state.level>=2;
+ if(!allowed){
+  openModal("Задание ещё не выполнено","Сначала выполни условие задания, затем возвращайся за наградой.");
+  return;
+ }
+ state.completed.push(id);
+ state.coins+=m.reward;
+ save();
+ openModal("Награда получена!","Ты заработал "+m.reward+" монет.");
+}
+
+function gainXP(amount){
+ state.xp+=amount;
+ while(state.xp>=state.level*100){
+  state.xp-=state.level*100;
+  state.level++;
+  state.coins+=50;
+ }
+}
+
+function battle(){
+ const player=totalPower();
+ const enemy=70+Math.floor(Math.random()*100);
+ const win=player+Math.random()*30>=enemy;
+ state.battles++;
+ if(win){
+  const reward=80+Math.floor(Math.random()*71);
+  state.coins+=reward;
+  gainXP(50);
+  document.getElementById("battleResult").innerHTML=
+   `<p style="color:#72e6a0">🏆 ПОБЕДА! Ты получил ${reward} монет и 50 опыта.</p>`;
+ }else{
+  gainXP(20);
+  document.getElementById("battleResult").innerHTML=
+   `<p style="color:#ffc66e">⚔️ Хорошая тренировка! Ты получил 20 опыта. Улучши героя и попробуй снова.</p>`;
+ }
+ save();
+}
+
+function renderArena(){
+ const h=currentHero();
+ document.getElementById("arenaHero").textContent=h.icon;
+ document.getElementById("arenaName").textContent=h.name;
+ document.getElementById("arenaLevel").textContent=state.level;
+ const names=["DragonKing","ShadowFox","LunaStar","TitanX"];
+ const rows=names.map((n,i)=>`<div class="item" style="padding:10px;border-bottom:1px solid #293653"><b>${i+1}.</b><span style="flex:1">${n}</span><span class="coins">${1800-i*230} 🏆</span></div>`).join("");
+ document.getElementById("leaderboard").innerHTML=
+ `<div class="item" style="padding:10px;border-bottom:1px solid #293653"><b>5.</b><span style="flex:1">Ты — ${h.name}</span><span class="coins">${totalPower()} ⚔️</span></div>`+rows+
+ `<p class="muted small">Пример рейтинга. Это демонстрационные игроки, а не реальные аккаунты.</p>`;
+}
+
+function renderAll(){
+ document.getElementById("coins").textContent=state.coins;
+ document.getElementById("homeLevel").textContent=state.level;
+ renderHeroes();renderProfile();renderShop();renderInventory();renderMissions();renderArena();
+}
+
+function chan
