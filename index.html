@@ -509,4 +509,20 @@ function renderAll(){
  renderHeroes();renderProfile();renderShop();renderInventory();renderMissions();renderArena();
 }
 
-function chan
+function changeLanguage(lang){
+ state.language=lang;
+ localStorage.setItem("playhub_save_v1",JSON.stringify(state));
+ const t=translations[lang]||translations.ru;
+ const keys=["home","heroes","profile","shop","inventory","missions","arena"];
+ document.querySelectorAll("#navigation button").forEach((b,i)=>{
+  b.textContent=t[keys[i]];
+ });
+}
+
+document.getElementById("language").value=state.language||"ru";
+renderAll();
+changeLanguage(state.language||"ru");
+</script>
+</body>
+</html>
+
