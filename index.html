@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLAY HUB — Online Gaming Platform</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090d18;color:#fff;font-family:Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:#111827;border-bottom:1px solid #263248}
+.logo{font-size:25px;font-weight:900;color:#55aaff}
+nav{display:flex;gap:20px;align-items:center}
+a{color:#ddd;text-decoration:none}
+select,button{padding:11px 15px;border:1px solid #34445e;border-radius:9px;background:#17243a;color:white}
+.hero{text-align:center;padding:75px 20px;background:radial-gradient(ellipse at top,#193d70,#090d18 70%)}
+.hero h1{font-size:clamp(38px,8vw,65px);margin:10px}
+.hero p{color:#b8c7dc;font-size:18px}
+.primary{background:#1675ed;border:0;font-weight:bold;cursor:pointer}
+section{padding:35px 6%}
+h2{font-size:27px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.game{background:#141e30;border:1px solid #293954;border-radius:15px;padding:23px}
+.game .emoji{font-size:42px}
+.game p{color:#aebbd0}
+.game button{width:100%;cursor:pointer;background:#176ce0;border:0}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.feature{padding:20px;background:#141e30;border-radius:12px}
+footer{text-align:center;padding:30px;color:#8594aa;border-top:1px solid #263248}
+@media(max-width:600px){header{padding:15px;flex-wrap:wrap;gap:12px}nav{gap:12px;font-size:14px}.hero{padding:55px 15px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🎮 PLAY HUB</div>
+  <nav>
+    <a href="#games" data-i="games">Игры</a>
+    <a href="#about" data-i="about">О нас</a>
+    <select id="language" aria-label="Language">
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+      <option value="tr">TR</option>
+      <option value="az">AZ</option>
+    </select>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <h1>PLAY HUB</h1>
+  <p data-i="subtitle">Твоя игровая вселенная начинается здесь!</p>
+  <a href="#games"><button class="primary" data-i="explore">Исследовать игры</button></a>
+</div>
+
+<section id="games">
+  <h2 data-i="gamesTitle">Популярные игры</h2>
+  <div class="games">
+    <div class="game">
+      <div class="emoji">⚔️</div>
+      <h3 data-i="game1">Арена героев</h3>
+      <p data-i="desc1">Сражайся и стань легендой арены.</p>
+      <button onclick="comingSoon()" data-i="play">Скоро</button>
+    </div>
+    <div class="game">
+      <div class="emoji">🏎️</div>
+      <h3 data-i="game2">Гонки</h3>
+      <p data-i="desc2">Проверь свою скорость.</p>
+      <button onclick="comingSoon()" data-i="play">Скоро</button>
+    </div>
+    <div class="game">
+      <div class="emoji">🧩</div>
+      <h3 data-i="game3">Головоломки</h3>
+      <p data-i="desc3">Испытай свою логику.</p>
+      <button onclick="comingSoon()" data-i="play">Скоро</button>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 data-i="about">О нас</h2>
+  <div class="features">
+    <div class="feature">🌍 <span data-i="f1">Четыре языка</span></div>
+    <div class="feature">🎮 <span data-i="f2">Игровая платформа</span></div>
+    <div class="feature">📱 <span data-i="f3">Для телефона и компьютера</span></div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 PLAY HUB · Online Gaming Platform</footer>
+
+<script>
+const translations={
+ru:{games:"Игры",about:"О нас",subtitle:"Твоя игровая вселенная начинается здесь!",explore:"Исследовать игры",gamesTitle:"Популярные игры",game1:"Арена героев",game2:"Гонки",game3:"Головоломки",desc1:"Сражайся и стань легендой арены.",desc2:"Проверь свою скорость.",desc3:"Испытай свою логику.",play:"Скоро",f1:"Четыре языка",f2:"Игровая платформа",f3:"Для телефона и компьютера",notice:"Игры скоро появятся!"},
+en:{games:"Games",about:"About",subtitle:"Your gaming universe starts here!",explore:"Explore games",gamesTitle:"Popular games",game1:"Heroes Arena",game2:"Racing",game3:"Puzzles",desc1:"Fight and become an arena legend.",desc2:"Test your speed.",desc3:"Challenge your logic.",play:"Coming soon",f1:"Four languages",f2:"Gaming platform",f3:"For mobile and desktop",notice:"Games are coming soon!"},
+tr:{games:"Oyunlar",about:"Hakkımızda",subtitle:"Oyun evrenin burada başlıyor!",explore:"Oyunları keşfet",gamesTitle:"Popüler oyunlar",game1:"Kahramanlar Arenası",game2:"Yarış",game3:"Bulmacalar",desc1:"Savaş ve arenanın efsanesi ol.",desc2:"Hızını test et.",desc3:"Mantığını dene.",play:"Yakında",f1:"Dört dil",f2:"Oyun platformu",f3:"Telefon ve bilgisayar için",notice:"Oyunlar yakında!"},
+az:{games:"Oyunlar",about:"Haqqımızda",subtitle:"Oyun dünyan burada başlayır!",explore:"Oyunları kəşf et",gamesTitle:"Populyar oyunlar",game1:"Qəhrəmanlar Arenası",game2:"Yarış",game3:"Tapmacalar",desc1:"Döyüş və arenanın əfsanəsi ol.",desc2:"Sürətini yoxla.",desc3:"Məntiqini sına.",play:"Tezliklə",f1:"Dörd dil",f2:"Oyun platforması",f3:"Telefon və kompüter üçün",notice:"Oyunlar tezliklə! "}
+};
+function setLanguage(lang){
+document.documentElement.lang=lang;
+document.querySelectorAll("[data-i]").forEach(el=>{
+const key=el.dataset.i;
+if(translations[lang][key])el.textContent=translations[lang][key];
+});
+}
+document.getElementById("language").addEventListener("change",e=>setLanguage(e.target.value));
+function comingSoon(){alert(translations[document.getElementById("language").value].notice)}
+</script>
+</body>
+</html>
